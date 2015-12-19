@@ -4,7 +4,7 @@ try:
 	import cPickle as pickle
 except:
 	import pickle
-import smtplib
+import smtplib, json, os
 
 class Base_Scrapper:
 	"""
@@ -81,33 +81,24 @@ class MailSender:
 		print "Mail notification sent!"
 
 if __name__ == '__main__':
-	#TODO load user config from file
-	config = {
-			'email': {
-					'to': 'justinas.marcinka@gmail.com',
-					'smtp': {
-						'login': 'jmmailerjm@gmail.com',
-						'password': 'sendmethatmail',
-						'server': 'smtp.gmail.com',
-						'port': 587
-					}
-				},
-			'search': {
-				'max-price': 500
-			}
-		}
+	current_dir = os.path.dirname(os.path.abspath(__file__))
+	config_file = os.path.join(current_dir, 'config.json')
+	data_file = os.path.join(current_dir, 'data.obj')
+	config = {}
+	with open(config_file, 'rb') as handle:
+		config = json.load(handle)
 
 	SCRAPPERS = [
 			Aruodas_Scrapper(config)
 		]
 	data = {}
 	# Load previously stored data - we want to remember which articles we've already seen
- 	try:
- 		with open('data.obj', 'rb') as handle:
- 			data = pickle.load(handle)
- 	except:
- 		pass
- 
+  	try:
+  		with open(data_file, 'rb') as handle:
+  			data = pickle.load(handle)
+  	except:
+  		pass
+  
 	# let's see if we have something new to see
 	new_records = []
 	for scrapper in SCRAPPERS:
@@ -120,8 +111,11 @@ if __name__ == '__main__':
 	if len(new_records) > 0:
 		MailSender(config).notify(new_records)
 
-	# store records for future reference
-	for entry in new_records:
-		data[entry['url']] = entry
-	with open('data.obj', 'wb') as handle:
-		pickle.dump(data, handle)
+		# store records for future reference
+		for entry in new_records:
+			data[entry['url']] = entry
+		with open(data_file, 'wb') as handle:
+			pickle.dump(data, handle)
+	else:
+		print 'No new records found.'
+

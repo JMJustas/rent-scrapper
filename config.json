@@ -1,0 +1,14 @@
+{
+	"email": {
+		"to": "justinas.marcinka@gmail.com",
+		"smtp": {
+			"login": "jmmailerjm@gmail.com",
+			"password": "sendmethatmail",
+			"server": "smtp.gmail.com",
+			"port": 587
+		}
+	},
+	"search": {
+		"max-price": 500
+	}
+}
