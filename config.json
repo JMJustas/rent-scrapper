@@ -1,5 +1,5 @@
 {
-	"sleep_time_max": 900,
+	"sleep_time_max": 0,
 	"email": {
 		"to": "justinas.marcinka@gmail.com",
 		"smtp": {
