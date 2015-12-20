@@ -1,5 +1,5 @@
 # rent-scrapper
-Python script that scrapes Lithuanian apartment rental sites for cheapest offers.
+Python script that scrapes Lithuanian apartment rental sites for cheapest offers. It is intended to be run as a cron job, so has no internal scheduling mechanism.
 
 # configuraton
 
