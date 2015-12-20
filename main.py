@@ -1,4 +1,3 @@
-# coding=utf-8
 from pyquery import PyQuery	as pq
 try:
 	import cPickle as pickle
@@ -25,7 +24,7 @@ class Base_Scrapper:
 			Should process given row and return an entry dict object containing fields 'url' and 'price' or None if the row is not valid
 		"""
 		pass
-# TODO init with config
+
 class Aruodas_Scrapper(Base_Scrapper):
 	"""
 		This is a scrapper implementation for aruodas.lt
@@ -87,7 +86,7 @@ if __name__ == '__main__':
 	config = {}
 	with open(config_file, 'rb') as handle:
 		config = json.load(handle)
-
+	
 	SCRAPPERS = [
 			Aruodas_Scrapper(config)
 		]
