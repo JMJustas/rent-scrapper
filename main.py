@@ -3,7 +3,7 @@ try:
 	import cPickle as pickle
 except:
 	import pickle
-import smtplib, json, os
+import smtplib, json, os, random, time
 
 class Base_Scrapper:
 	"""
@@ -86,6 +86,13 @@ if __name__ == '__main__':
 	config = {}
 	with open(config_file, 'rb') as handle:
             config = json.load(handle)
+
+        # sleep for up to sleep_time_max seconds to randomize script run time
+        if config['sleep_time_max'] > 0:
+            sleep_time = random.randint(0, config['sleep_time_max'])
+            print 'sleeping for %d seconds before executing...' % sleep_time 
+            time.sleep(sleep_time) 
+        print "Starting..."
 	
 	SCRAPPERS = [
                     Aruodas_Scrapper(config)
